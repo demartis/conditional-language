@@ -1,4 +1,3 @@
-
 # Conditional Language Shortcodes - WordPress Plugin
 
 **Version:** 1.0.0  
@@ -11,20 +10,40 @@
 
 ## Overview
 
-Conditional Language Shortcodes is a lightweight WordPress plugin that displays content based on the language detected in the URL. The plugin supports any two-letter language code and works with both standalone shortcode usage and as a container with fallback content.
+Conditional Language Shortcodes is an awesome plugin for WordPress that streamlines content management when combined with the Polylang and Redirection plugins. It enables you to **centralize similar content** on one common page while serving different language variations based on the URL. With this approach, you can easily manage pages that differ by very little content – such as British, Australian, or American English – without duplicating content across multiple pages.
 
-The plugin detects language from URLs that follow the pattern:
+### Key Benefits:
 
-```
-/{lang}/...-{lang}/
-```
+- **Centralized Content:**  
+  Create a single content file (for example, `/en/mypage`) containing all language variants using conditional shortcodes.  
+- **Efficient Multilingual Management:**  
+  Reduce redundancy by managing slight content differences for sites targeting different regions.  
+- **Seamless Integration:**  
+  Works perfectly with the Polylang plugin for multilingual sites and the Redirection plugin configured in Pass-through mode.
+- **Easy to Read and Maintain:**  
+  The shortcode structure is simple and clear, making future updates straightforward.
 
-For example:
-- `/gb/some-page-gb/`
-- `/au/another-page-au/`
-- `/en/example-en/`
+---
 
-When the current URL matches the language, the corresponding content is displayed.
+## How It Works
+
+1. **URL Language Detection:**  
+   The plugin detects the current language from the URL via a regular expression. For example, URLs like `/gb/some-page-gb/`, `/au/some-page-au/`, or `/us/some-page-us/` will determine whether the user sees content for Great Britain, Australia, or the United States.
+
+2. **Content Centralization Using Shortcodes:**  
+   Write your content once on your main page (e.g., `/en/mypage`) using conditional shortcodes:
+   - `[if_lang]` – Outputs content immediately if the language matches.
+   - `[conditional_language]` – Acts as a container for multiple `[if_lang]` blocks and an optional `[otherwise]` fallback.
+  
+3. **Redirection Plugin Integration – Pass-through Mode:**  
+   Configure the Redirection plugin to serve the content from your centralized page while keeping the original URL in the browser. This is done by enabling Pass-through mode in your redirection rule:
+   
+   **Redirection Plugin Settings:**
+   - **Match:** `^/(gb|au|us)/(.+)-\1(/)?$`
+   - **Target URL:** `/en/$2`
+   - **Type:** Pass-through (instead of Redirect)
+   
+   With this setup, visitors accessing `/gb/mypage-gb/` (or similar) will see the same content as `/en/mypage`, but the browser will retain the original URL.
 
 ---
 
@@ -32,33 +51,34 @@ When the current URL matches the language, the corresponding content is displaye
 
 ### Standalone Shortcode Example
 
-Use the `[if_lang]` shortcode on its own. This will immediately output its content if the current language matches the provided `code` attribute:
+Use the `[if_lang]` shortcode directly within a page or post. The following example outputs its content only when the current language matches the given code:
 
 ```html
-[if_lang code="en"]This content is displayed only when the current language is English.[/if_lang]
+[if_lang code="en"]This content is shown only on English language pages.[/if_lang]
 ```
 
 ### Container Shortcode with Fallback
 
-Wrap multiple `[if_lang]` conditions and an `[otherwise]` fallback inside a `[conditional_language]` container. The container outputs the first matching `[if_lang]` content; if none match, the `[otherwise]` content is displayed:
+Wrap multiple `[if_lang]` shortcodes within a `[conditional_language]` container for enhanced control. The container ensures that the first language match is used; if no match occurs, the fallback content inside the `[otherwise]` block is displayed:
 
 ```html
 [conditional_language]
-  [if_lang code="gb"]This is the content for Great Britain.[/if_lang]
-  [if_lang code="au"]This is the content for Australia.[/if_lang]
-  [otherwise]This is the content for other languages.[/otherwise]
+  [if_lang code="gb"]This is the content for British English users.[/if_lang]
+  [if_lang code="au"]This is the content for Australian users.[/if_lang]
+  [if_lang code="us"]This is the content for American users.[/if_lang]
+  [otherwise]This is the default content for all other languages.[/otherwise]
 [/conditional_language]
 ```
 
 ### Multiple Language Conditions Example
 
-Define several conditions within a container with a fallback for unmatched languages:
+For pages with several language-specific conditions, use the container to group your rules together. For instance:
 
 ```html
 [conditional_language]
-  [if_lang code="en"]Content for English users.[/if_lang]
-  [if_lang code="es"]Contenido para usuarios en español.[/if_lang]
-  [if_lang code="fr"]Contenu pour les utilisateurs français.[/if_lang]
+  [if_lang code="en"]Content for English-speaking users.[/if_lang]
+  [if_lang code="es"]Contenido para usuarios hispanohablantes.[/if_lang]
+  [if_lang code="fr"]Contenu pour les utilisateurs francophones.[/if_lang]
   [otherwise]Default content for users of other languages.[/otherwise]
 [/conditional_language]
 ```
@@ -67,28 +87,29 @@ Define several conditions within a container with a fallback for unmatched langu
 
 ## Features
 
-- **Universal Language Code Support:**  
-  Works with any valid two-letter language code detected from the URL.
+- **Universal Two-Letter Code Support:**  
+  Detects and supports any valid two-letter language code from the URL.
+  
+- **Flexible Shortcode Options:**  
+  - **Standalone `[if_lang]`:** Outputs immediately if the condition is met.
+  - **Container `[conditional_language]`:** Groups multiple conditions with a fallback `[otherwise]`.
+  
+- **Seamless Integration with Redirection & Polylang:**  
+  Best used in combination with the Redirection plugin (using Pass-through mode) and Polylang to centralize content management across multiple regional versions.
 
-- **Flexible Shortcode Usage:**  
-  - **Standalone `[if_lang]` Shortcode:** Immediately displays content if the language condition is met.
-  - **Container `[conditional_language]` Shortcode:** Supports grouping of multiple `[if_lang]` conditions with an `[otherwise]` fallback if no conditions match.
-
-- **Helper Function:**  
-  The plugin also exposes a helper function:
-  ```php
-  conditional_language_is( $lang );
-  ```
-  which returns `true` if the current language matches the provided two-letter code.
+- **Helper Function for Developers:**  
+  Utilize the `conditional_language_is( $lang )` function in your theme or plugin code to tailor content dynamically based on the detected language.
 
 - **Internationalization Ready:**  
-  Fully prepared for translations.
+  Designed with translation in mind, making it easy to adapt the plugin for any language.
 
 ---
 
 ## Requirements
 
 - WordPress 4.7 or higher.
+- The [Polylang](https://wordpress.org/plugins/polylang/) plugin (for managing multiple languages) is highly recommended.
+- The [Redirection](https://wordpress.org/plugins/redirection/) plugin for handling internal URL rewrites in Pass-through mode.
 
 ---
 
@@ -99,48 +120,66 @@ Define several conditions within a container with a fallback for unmatched langu
 1. **Download the Plugin:**  
    Clone or download the repository from [GitHub](https://github.com/demartis/conditional-language).
 
-2. **Extract the Archive:**  
-   Extract the files (if downloaded as a ZIP).
+2. **Extract the Files:**  
+   Unzip the archive if necessary.
 
 3. **Upload the Plugin:**  
-   Upload the `conditional-language` folder to your `/wp-content/plugins/` directory.
+   Upload the entire `conditional-language` folder to your `/wp-content/plugins/` directory.
 
 4. **Activate the Plugin:**  
-   In your WordPress admin area, navigate to **Plugins** and activate **Conditional Language Shortcodes**.
+   In your WordPress admin panel, navigate to **Plugins** and activate **Conditional Language Shortcodes**.
 
 ---
 
-## Usage
+## Redirection Plugin Setup
 
-### Using the Shortcodes
+To fully benefit from the centralized content approach, configure the Redirection plugin as follows:
 
-#### Standalone `[if_lang]` Shortcode
+1. **Create a New Rule:**
 
-Place the shortcode anywhere in your posts or pages. For example, to show content only for English users:
+   - **Match URL:**  
+     `^/(gb|au|us)/(.+)-\1(/)?$`
+   
+   - **Target URL:**  
+     `/en/$2`
+   
+   - **Type:**  
+     Select **Pass-through** (ensuring the URL in the browser remains the same while serving the centralized content).
+
+2. **Enable Pass-through Mode:**  
+   In the Redirection plugin settings, ensure the Pass-through option is enabled for this rule. This integration allows you to manage a single page's content while serving localized URLs.
+
+---
+
+## Using the Shortcodes
+
+### Standalone `[if_lang]` Shortcode
+
+Place the shortcode anywhere in your content. For example:
 
 ```html
-[if_lang code="en"]This content is displayed only for English language pages.[/if_lang]
+[if_lang code="en"]This content is shown only for English language pages.[/if_lang]
 ```
 
-#### Container Shortcodes: `[conditional_language]`, `[if_lang]`, and `[otherwise]`
+### Container Shortcodes
 
-Enclose your language-specific shortcodes within a `[conditional_language]` container:
+Group language-specific conditions using the `[conditional_language]` container:
 
 ```html
 [conditional_language]
-  [if_lang code="gb"]This is the content for Great Britain.[/if_lang]
-  [if_lang code="au"]This is the content for Australia.[/if_lang]
-  [otherwise]This is the content for other languages.[/otherwise]
+  [if_lang code="gb"]This is the content for British English users.[/if_lang]
+  [if_lang code="au"]This is the content for Australian users.[/if_lang]
+  [otherwise]This is the default content for all other languages.[/otherwise]
 [/conditional_language]
 ```
 
-### Using the Helper Function
+### Developer Helper Function
 
-You can also check the current language in your theme or plugin code:
+In your theme or custom plugin code, check the current language:
 
 ```php
 if ( conditional_language_is( 'en' ) ) {
-    // Execute code specific to English language pages.
+    // Code to execute for English language pages.
 }
 ```
 
@@ -150,9 +189,10 @@ if ( conditional_language_is( 'en' ) ) {
 
 ### 1.0.0
 - Initial release of Conditional Language Shortcodes.
-- Support for any two-letter language code.
-- Shortcodes: `[if_lang]`, `[conditional_language]`, and `[otherwise]`.
-- Exposed helper function `conditional_language_is()` for developers.
+- Supports any two-letter language code via URL detection.
+- Provides shortcodes: `[if_lang]`, `[conditional_language]`, and `[otherwise]`.
+- Exposes helper function `conditional_language_is()` for developers.
+- Seamless integration with the Redirection plugin in Pass-through mode.
 
 ---
 
@@ -164,4 +204,17 @@ This plugin is licensed under the LGPL license.
 
 ## Support
 
-For support, updates, or further inquiries, please use the [GitHub Issues](https://github.com/demartis/conditional-language/issues) page.
+For support, bug reports, or feature requests, please open an issue on the [GitHub Issues](https://github.com/demartis/conditional-language/issues) page.
+```
+
+---
+
+## Final Notes
+
+- **Why This Plugin?**  
+  This plugin is ideal if you need to manage similar content for different regions (e.g., UK, Australia, US) without maintaining separate pages for each variation. When used in combination with the Polylang and Redirection plugins, it dramatically simplifies content management and ensures consistency across your multilingual site.
+
+- **Integration Advantage:**  
+  With the clever use of internal rewrites (Pass-through mode), your visitors see the localized URL (like `/gb/mypage-gb/`), while the content is served from a centralized page (like `/en/mypage`). This setup reduces duplication and centralizes maintenance, making it perfect for sites where content differs only minimally by language.
+
+Enjoy using Conditional Language Shortcodes to create an efficient, streamlined multilingual website!
