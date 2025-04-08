@@ -1,8 +1,4 @@
-## README
 
-Create a file named `README.md` and include the following content:
-
-```markdown
 # Conditional Language Shortcodes - WordPress Plugin
 
 **Version:** 1.0.0  
@@ -169,19 +165,3 @@ This plugin is licensed under the LGPL license.
 ## Support
 
 For support, updates, or further inquiries, please use the [GitHub Issues](https://github.com/demartis/conditional-language/issues) page.
-```
-
----
-
-## Final Notes
-
-1. **Hosting on GitHub:**  
-   Use the provided repository link (https://github.com/demartis/conditional-language) to host your code.
-
-2. **Best Practices:**  
-   The plugin code adheres to WordPress coding standards, proper escaping is in place (with content processed via `do_shortcode`), and the functions are well-commented to explain their purpose and usage.
-
-3. **Internationalization:**  
-   Although this example does not include translation functions (like `__()`), you can extend it further to support translation as needed by loading text domains.
-
-You now have a fully functional WordPress plugin along with a complete README. Enjoy coding and feel free to adjust as needed!
