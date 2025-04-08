@@ -187,6 +187,11 @@ if ( conditional_language_is( 'en' ) ) {
 
 ## Changelog
 
+### 1.1.0
+- Added full support for any two-letter language code extracted from the URL using a flexible regex pattern.
+- Language detection is now dynamic and not hardcoded to specific values like gb, au, or us.
+- Improved flexibility for multilingual websites with custom or less common language or region codes.
+  
 ### 1.0.0
 - Initial release of Conditional Language Shortcodes.
 - Supports any two-letter language code via URL detection.
