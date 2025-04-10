@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: Conditional Language Shortcodes
- * Plugin URI:  https://github.com/demartis/conditional-language
+ * Plugin Name: WP Conditional Language Shortcodes
+ * Plugin URI:  https://github.com/demartis/wp-conditional-language-shortcodes
  * Description: Displays content based on the language code detected in the URL via shortcodes. Supports standalone [if_lang] usage as well as a [conditional_language] container with a fallback [otherwise].
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      Riccardo De Martis
  * Author URI:  https://www.linkedin.com/in/rdemartis
  * License:     LGPL
- * Text Domain: conditional-language-shortcodes
+ * Text Domain: wp-conditional-language-shortcodes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
