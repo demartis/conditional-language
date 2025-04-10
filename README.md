@@ -1,6 +1,6 @@
 # Conditional Language Shortcodes - WordPress Plugin
 
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **Author:** Riccardo De Martis  
 **Author URI:** [https://www.linkedin.com/in/rdemartis](https://www.linkedin.com/in/rdemartis)  
 **Plugin URI:** [https://github.com/demartis/conditional-language](https://github.com/demartis/conditional-language)  
@@ -28,7 +28,7 @@ Conditional Language Shortcodes is an awesome plugin for WordPress that streamli
 ## How It Works
 
 1. **URL Language Detection:**  
-   The plugin detects the current language from the URL via a regular expression. For example, URLs like `/gb/some-page-gb/`, `/au/some-page-au/`, or `/us/some-page-us/` will determine whether the user sees content for Great Britain, Australia, or the United States.
+   The plugin detects the current language from the URL via a regular expression. For example, URLs like `/gb/mypage-gb/`, `/au/mypage-au/`, or `/us/mypage-us/` will determine whether the user sees content for Great Britain, Australia, or the United States.
 
 2. **Content Centralization Using Shortcodes:**  
    Write your content once on your main page (e.g., `/en/mypage`) using conditional shortcodes:
@@ -39,12 +39,12 @@ Conditional Language Shortcodes is an awesome plugin for WordPress that streamli
    Configure the Redirection plugin to serve the content from your centralized page while keeping the original URL in the browser. This is done by enabling Pass-through mode in your redirection rule:
    
    **Redirection Plugin Settings:**
-   - **Match:** `^/(gb|au|us)/(.+)-\1(/)?$`
+   - **Match:** `^/(gb|au|us)/(.+)-\1(/)?$`   
    - **Target URL:** `/en/$2`
    - **Type:** Pass-through (instead of Redirect)
    
-   With this setup, visitors accessing `/gb/mypage-gb/` (or similar) will see the same content as `/en/mypage`, but the browser will retain the original URL.
-
+   With this setup, visitors accessing `/gb/mypage-gb/` (or similar) will see the same content as `/en/mypage`, but the browser will retain the original URL. The `[conditional_language]` settings will output country-specific contents based on the matches language code.
+ 
 ---
 
 ## Quick Usage Examples
@@ -188,9 +188,8 @@ if ( conditional_language_is( 'en' ) ) {
 ## Changelog
 
 ### 1.1.0
-- Added full support for any two-letter language code extracted from the URL using a flexible regex pattern.
-- Language detection is now dynamic and not hardcoded to specific values like gb, au, or us.
-- Improved flexibility for multilingual websites with custom or less common language or region codes.
+- Full support for any two-letter language code.
+- Dynamic language detection
   
 ### 1.0.0
 - Initial release of Conditional Language Shortcodes.
