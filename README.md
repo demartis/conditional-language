@@ -1,7 +1,7 @@
 
-# WP Conditional Language Shortcodes – WordPress Plugin
+# Conditional Language Shortcodes – WordPress Plugin
 
-**Version:** 1.1.1  
+**Version:** 1.1.2
 **Author:** Riccardo De Martis  
 **Author URI:** [https://www.linkedin.com/in/rdemartis](https://www.linkedin.com/in/rdemartis)  
 **Plugin URI:** [https://github.com/demartis/wp-conditional-language-shortcodes](https://github.com/demartis/wp-conditional-language-shortcodes)  
@@ -11,7 +11,7 @@
 
 ## Overview
 
-**WP Conditional Language Shortcodes** is the perfect companion for multilingual WordPress websites built with **Polylang** and **Redirection**.  
+**Conditional Language Shortcodes** is the perfect companion for multilingual WordPress websites built with **Polylang** and **Redirection**.  
 
 This plugin lets you **centralize shared content** on one page (e.g. `/en/mypage`) while showing **country-specific variations** — ideal for cases like **Australia**, **UK**, and **USA** where content differs only slightly.
 
@@ -113,7 +113,7 @@ if ( conditional_language_is( 'au' ) ) {
 
 ## Changelog
 
-### 1.1.1
+### 1.1.1, 1.1.2
 - Fixed GitHub links, project name and documentation.
 
 ### 1.1.0
