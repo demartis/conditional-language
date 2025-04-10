@@ -1,7 +1,7 @@
 
 # Conditional Language Shortcodes – WordPress Plugin
 
-**Version:** 1.1.2
+**Version:** 1.2.0
 **Author:** Riccardo De Martis  
 **Author URI:** [https://www.linkedin.com/in/rdemartis](https://www.linkedin.com/in/rdemartis)  
 **Plugin URI:** [https://github.com/demartis/wp-conditional-language-shortcodes](https://github.com/demartis/wp-conditional-language-shortcodes)  
@@ -50,22 +50,22 @@ Instead of duplicating pages, you manage all variants with clean shortcodes.
    ^/([a-z]{2})/(.+)-\1(/)?$
    → /en/$2
    ```
-   
+
    So a user visiting `/gb/product-gb/` will be served `/en/product`, but see content tailored for `gb`.
 
 
 3. (alternative) You might want to create different configs to manage multiple languages, the case of
-   
+
    Australia, UK, and USA → rendered as EN
-   
+
    France, Canada → rendered as FR
 
    In that case:
    ```regexp
    ^/(au|uk|us)/(.+)-\1(/)?$
    → /en/$2
-   
-   
+
+
    ^/(fn|ca)/(.+)-\1(/)?$
    → /fr/$2
    ```
@@ -113,9 +113,11 @@ if ( conditional_language_is( 'au' ) ) {
 
 ## Changelog
 
+### 1.2.0
+- Injection of current language in Polylang. 
+
 ### 1.1.1, 1.1.2
 - Fixed GitHub links, project name and documentation.
-
 ### 1.1.0
 - Added dynamic support for any 2-letter language code via URL.
 - Now works with any country-based language slug (not just gb, au, us).
@@ -133,17 +135,17 @@ LGPL – Use freely in personal or commercial projects.
 
 ## Support
 
-Open issues and feature requests at  
+Open issues and feature requests at
 👉 [github.com/demartis/wp-conditional-language-shortcodes/issues](https://github.com/demartis/wp-conditional-language-shortcodes/issues)
 
 ---
 
 ## Perfect For
 
-✅ Multilingual WordPress sites  
-✅ Polylang configured with country codes (e.g., `gb`, `au`, `us`)  
-✅ Minimal content variations across regions  
-✅ Centralized content & simplified updates  
+✅ Multilingual WordPress sites
+✅ Polylang configured with country codes (e.g., `gb`, `au`, `us`)
+✅ Minimal content variations across regions
+✅ Centralized content & simplified updates
 ✅ Clean, no-redirect URLs with Redirection's **Pass-through**
 
 ---

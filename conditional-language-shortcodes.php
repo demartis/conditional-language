@@ -3,7 +3,7 @@
  * Plugin Name: Conditional Language Shortcodes
  * Plugin URI:  https://github.com/demartis/wp-conditional-language-shortcodes
  * Description: Displays content based on the language code detected in the URL via shortcodes. Supports standalone [if_lang] usage as well as a [conditional_language] container with a fallback [otherwise].
- * Version:     1.1.2
+ * Version:     1.2.0
  * Author:      Riccardo De Martis
  * Author URI:  https://www.linkedin.com/in/rdemartis
  * License:     LGPL
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Conditional_Language_Plugin {
 
-    /**
+   /**
      * Flag to indicate if we are inside a [conditional_language] container.
      *
      * @var bool
@@ -36,6 +36,13 @@ class Conditional_Language_Plugin {
     private static $match_found = false;
 
     /**
+     * Variable to hold the true language for Polylang injection.
+     *
+     * @var string
+     */
+    private static $true_language = '';
+
+    /**
      * Initialize hooks and register shortcodes.
      */
     public static function init() {
@@ -45,6 +52,9 @@ class Conditional_Language_Plugin {
 
         // Optionally expose helper function for developers.
         add_action( 'plugins_loaded', array( __CLASS__, 'load_helper_function' ) );
+
+         // Inject Polylang language override early.
+        add_action( 'init', array( __CLASS__, 'force_polylang_current_language' ), 1 );
     }
 
     /**
@@ -83,6 +93,37 @@ class Conditional_Language_Plugin {
         }
         return '';
     }
+
+   /**
+     * Forces the current language for Polylang based on the detected language code.
+     *
+     * This function sets a filter to override Polylang's current language and locale based on the URL.
+     * It extracts the language code from the URL using get_current_language, then overrides Polylang's
+     * current language and locale settings accordingly.
+     */
+    public static function force_polylang_current_language() {
+        $lang = self::get_current_language();
+        if ( $lang ) {
+            self::$true_language = $lang;
+
+            // Override Polylang's current language
+            add_filter( 'pll_get_current_language', function () use ( $lang ) {
+                return $lang;
+            });
+
+            // Dynamically detect locale from Polylang language settings
+            add_filter( 'locale', function ( $locale ) use ( $lang ) {
+                if ( function_exists( 'pll_get_languages' ) ) {
+                    $languages = pll_get_languages( array( 'raw' => 1 ) );
+                    if ( isset( $languages[ $lang ] ) && ! empty( $languages[ $lang ]['locale'] ) ) {
+                        return $languages[ $lang ]['locale'];
+                    }
+                }
+                return $locale;
+            });
+        }
+    }
+
 
     /**
      * Handler for the [conditional_language] container shortcode.
